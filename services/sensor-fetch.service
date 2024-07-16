@@ -1,0 +1,17 @@
+[Unit]
+Description=data fetcher service
+After=syslog.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/sensorenv/fetch_data/
+ExecStart=/home/ubuntu/sensorenv/bin/python /home/ubuntu/sensorenv/fetch_data/fetch_data.py
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

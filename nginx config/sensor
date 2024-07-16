@@ -1,0 +1,60 @@
+#back-end
+server{
+	listen 8080;
+	server_name sepord.ajums.ac.ir;
+	root /home/ubuntu/sensorenv/navgan_sensor/;
+	client_max_body_size 10M;
+	location ^~ /api/ {
+		include uwsgi_params;                
+		uwsgi_pass unix:/run/uwsgi/sensor.sock;
+	}
+	location ^~ /admin/ {
+		include uwsgi_params;
+		uwsgi_pass unix:/run/uwsgi/sensor.sock;
+	}
+	location /static {
+		root /home/ubuntu/sensorenv/navgan_sensor;
+	}
+	location /media {
+		root /home/ubuntu/sensorenv/navgan_sensor;
+	}
+}
+
+#front-end
+
+server {
+
+        listen       80 default_server;
+
+        listen       [::]:80 default_server;
+
+        server_name  sepord.ajums.ac.ir;
+
+        root         /home/ubuntu/sensorenv/spa/;
+
+        # Load configuration files for the default server block.
+
+       # include /etc/nginx/default.d/*.conf;
+
+        location / {
+
+        root /home/ubuntu/sensorenv/spa;
+
+        index index.html;
+
+        }
+
+        error_page 404 /404.html;
+
+            location = /40x.html {
+
+        }
+
+        error_page 500 502 503 504 /50x.html;
+
+            location = /50x.html {
+
+        }
+
+    }
+
